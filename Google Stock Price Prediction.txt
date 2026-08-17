@@ -1,0 +1,31 @@
+Google Stock Price Prediction
+│
+├── 1. Data Collection
+│
+├── 2. Data Cleaning
+│
+├── 3. Exploratory Data Analysis
+│
+├── 4. Time Series Decomposition
+│
+├── 5. Stationarity Test
+│     └── ADF Test
+│
+├── 6. ACF & PACF
+│
+├── 7. AR Model
+│
+├── 8. MA Model
+│
+├── 9. ARIMA Model
+│
+├── 10. SARIMA Model
+│
+├── 11. SARIMAX Model
+│
+├── 12. Model Evaluation
+│     ├── MAE
+│     ├── RMSE
+│     └── MAPE
+│
+└── 13. Best Model & Forecast
