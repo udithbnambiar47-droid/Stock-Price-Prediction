@@ -1,0 +1,1059 @@
+MACHINE LEARNING — COMPLETE NOTES
+===================================
+
+1. WHAT IS MACHINE LEARNING?
+----------------------------
+Machine Learning (ML) is a branch of Artificial Intelligence that enables computers to learn patterns from data and make predictions or decisions without being explicitly programmed for every situation.
+
+Example:
+If we provide a model with historical house data containing area, bedrooms, location and price, the model can learn the relationship between these variables and predict the price of a new house.
+
+
+2. WHY MACHINE LEARNING?
+------------------------
+Machine Learning is used when traditional rule-based programming becomes difficult.
+
+Applications:
+- Stock price prediction
+- Loan approval and risk analysis
+- Fraud detection
+- Customer segmentation
+- Recommendation systems
+- Disease prediction
+- Spam detection
+- Image recognition
+- Sales forecasting
+- Demand forecasting
+
+
+3. AI VS ML VS DEEP LEARNING
+----------------------------
+AI = Broad field of making machines intelligent.
+ML = Subset of AI that learns from data.
+Deep Learning = Subset of ML using neural networks with multiple layers.
+
+Relationship:
+Artificial Intelligence
+    |
+    +-- Machine Learning
+            |
+            +-- Deep Learning
+
+
+4. TYPES OF MACHINE LEARNING
+----------------------------
+1. Supervised Learning
+   Learns from labelled data.
+   Example: House features -> House price
+
+2. Unsupervised Learning
+   Learns patterns from unlabelled data.
+   Example: Customer data -> Customer groups
+
+3. Semi-Supervised Learning
+   Uses a combination of labelled and unlabelled data.
+
+4. Reinforcement Learning
+   An agent learns by interacting with an environment using rewards and penalties.
+   Examples: Game-playing AI, robotics, autonomous systems.
+
+
+5. MACHINE LEARNING WORKFLOW
+----------------------------
+Problem Definition
+        |
+Data Collection
+        |
+Data Understanding
+        |
+Data Cleaning
+        |
+Exploratory Data Analysis
+        |
+Feature Engineering
+        |
+Train-Test Split
+        |
+Model Selection
+        |
+Model Training
+        |
+Model Evaluation
+        |
+Hyperparameter Tuning
+        |
+Prediction
+        |
+Deployment
+
+
+6. DATA PREPROCESSING
+---------------------
+
+6.1 Missing Values
+Missing values can be handled using:
+- Mean
+- Median
+- Mode
+- Forward fill
+- Backward fill
+- Removing rows/columns
+
+Python:
+df["Age"].fillna(df["Age"].median(), inplace=True)
+
+
+6.2 Duplicate Values
+Duplicate records should be identified and removed when they represent repeated observations.
+
+Python:
+df.drop_duplicates(inplace=True)
+
+
+6.3 Outliers
+An outlier is an unusually high or low observation.
+
+Common methods:
+- IQR
+- Z-score
+- Box plot
+
+IQR = Q3 - Q1
+
+Lower Bound = Q1 - 1.5 x IQR
+Upper Bound = Q3 + 1.5 x IQR
+
+
+6.4 Categorical Encoding
+Machine Learning models generally require numerical input.
+
+Label Encoding:
+Male -> 0
+Female -> 1
+
+One-Hot Encoding:
+Bangalore -> 1 0 0
+Mumbai    -> 0 1 0
+Delhi     -> 0 0 1
+
+Python:
+pd.get_dummies(df, columns=["City"])
+
+
+6.5 Feature Scaling
+Scaling makes numerical features comparable.
+
+Standardization:
+Z = (X - mean) / standard deviation
+
+Normalization:
+X' = (X - X_min) / (X_max - X_min)
+
+Python:
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+Scaling is particularly important for:
+- KNN
+- SVM
+- Logistic Regression
+- Linear Regression
+- Neural Networks
+- K-Means
+
+Tree-based models generally do not require feature scaling.
+
+
+6.6 Train-Test Split
+Training data is used to train the model.
+Testing data is used to evaluate the model.
+
+Python:
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+Common split:
+80% Training
+20% Testing
+
+
+7. SUPERVISED LEARNING
+----------------------
+Supervised learning uses:
+Input Features (X) -> Target (y)
+
+It has two major categories:
+1. Regression
+2. Classification
+
+
+8. REGRESSION
+-------------
+Regression predicts a continuous numerical value.
+
+Examples:
+- House price
+- Stock price
+- Revenue
+- Temperature
+- Salary
+
+
+8.1 Linear Regression
+Linear Regression finds the relationship between independent variables and a continuous dependent variable.
+
+Equation:
+y = beta0 + beta1*x + error
+
+Where:
+y = predicted value
+beta0 = intercept
+beta1 = coefficient
+x = independent variable
+error = prediction error
+
+Python:
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+prediction = model.predict(X_test)
+
+
+8.2 Multiple Linear Regression
+Uses multiple independent variables.
+
+Equation:
+y = beta0 + beta1*X1 + beta2*X2 + ... + betan*Xn
+
+Example:
+House Price = Area + Bedrooms + Location + Age
+
+
+8.3 Polynomial Regression
+Used when the relationship between variables is nonlinear.
+
+Equation:
+y = beta0 + beta1*x + beta2*x^2 + ... + betan*x^n
+
+
+8.4 Ridge Regression
+Ridge Regression adds L2 regularization to Linear Regression.
+
+It helps reduce overfitting.
+
+Loss = MSE + lambda * sum(beta^2)
+
+
+8.5 Lasso Regression
+Lasso uses L1 regularization.
+
+Loss = MSE + lambda * sum(abs(beta))
+
+Lasso can reduce some coefficients to zero, making it useful for feature selection.
+
+
+8.6 Elastic Net
+Elastic Net combines:
+- L1 regularization
+- L2 regularization
+
+It is useful when there are many correlated features.
+
+
+9. CLASSIFICATION
+-----------------
+Classification predicts a category or class.
+
+Examples:
+- Loan -> Approved / Rejected
+- Email -> Spam / Not Spam
+- Customer -> Churn / No Churn
+
+
+9.1 Logistic Regression
+Despite its name, Logistic Regression is mainly used for classification.
+
+It uses the sigmoid function:
+
+P(y=1) = 1 / (1 + e^(-z))
+
+where:
+z = beta0 + beta1*X1 + ... + betan*Xn
+
+The output lies between 0 and 1.
+
+Example:
+Probability = 0.85
+
+The model may classify this as class 1 if the threshold is 0.5.
+
+
+9.2 K-Nearest Neighbors (KNN)
+KNN predicts based on the closest observations.
+
+For classification, it looks at the K nearest points and chooses the majority class.
+
+Example:
+K = 5
+
+Nearest 5 customers:
+Approved
+Approved
+Rejected
+Approved
+Rejected
+
+Prediction -> Approved
+
+KNN is sensitive to feature scaling.
+
+
+9.3 Decision Tree
+A Decision Tree makes predictions using a sequence of rules.
+
+Example:
+Income > 50,000?
+    Yes -> Approved
+    No  -> Rejected
+
+Advantages:
+- Easy to understand
+- Handles nonlinear relationships
+- Requires little preprocessing
+
+Disadvantage:
+- Can easily overfit
+
+
+9.4 Random Forest
+Random Forest is an ensemble of multiple Decision Trees.
+
+Tree 1 \
+Tree 2  \
+Tree 3   -> Final Prediction
+Tree 4  /
+Tree 5 /
+
+It generally provides better generalization than a single Decision Tree.
+
+
+9.5 Support Vector Machine (SVM)
+SVM finds a decision boundary called a hyperplane that separates classes.
+
+It tries to maximize the margin between classes.
+
+Useful for:
+- Classification
+- High-dimensional data
+
+Common kernels:
+- Linear
+- Polynomial
+- RBF
+
+
+9.6 Naive Bayes
+Naive Bayes is based on Bayes' theorem.
+
+P(A|B) = P(B|A)P(A) / P(B)
+
+It assumes features are conditionally independent.
+
+Applications:
+- Spam detection
+- Text classification
+- Sentiment analysis
+
+
+10. UNSUPERVISED LEARNING
+-------------------------
+In unsupervised learning, there is no target variable.
+
+The model attempts to discover hidden patterns.
+
+Main techniques:
+- Clustering
+- Dimensionality Reduction
+
+
+10.1 K-Means Clustering
+K-Means divides observations into K clusters.
+
+Steps:
+1. Choose K
+2. Initialize centroids
+3. Assign points to nearest centroid
+4. Update centroids
+5. Repeat
+
+Example:
+Customers -> K-Means -> Low Value / Medium Value / High Value
+
+
+10.2 Elbow Method
+The Elbow Method helps determine the appropriate number of clusters.
+
+It calculates the within-cluster sum of squares for different values of K.
+
+The point where improvement starts slowing down is called the elbow.
+
+
+10.3 Hierarchical Clustering
+Hierarchical clustering creates a tree-like structure called a dendrogram.
+
+Two approaches:
+- Agglomerative
+- Divisive
+
+Agglomerative starts with individual points and gradually merges them.
+
+
+10.4 DBSCAN
+DBSCAN stands for Density-Based Spatial Clustering of Applications with Noise.
+
+Advantages:
+- Can identify irregular-shaped clusters
+- Can detect noise/outliers
+- Does not require specifying the number of clusters beforehand
+
+
+11. DIMENSIONALITY REDUCTION
+----------------------------
+Dimensionality reduction reduces the number of features while trying to retain important information.
+
+Benefits:
+- Faster computation
+- Less complexity
+- Visualization
+- Reduced noise
+- Helps with high-dimensional data
+
+
+11.1 PCA
+PCA stands for Principal Component Analysis.
+
+PCA transforms original features into new variables called Principal Components.
+
+The first component captures maximum variance, the second captures the next highest variance, and so on.
+
+Uses:
+- Visualization
+- Feature reduction
+- High-dimensional datasets
+
+
+12. MODEL EVALUATION — REGRESSION
+---------------------------------
+
+12.1 MAE
+Mean Absolute Error measures average absolute prediction error.
+
+MAE = (1/n) * sum(|yi - y_predicted|)
+
+Lower MAE = better model.
+
+
+12.2 MSE
+Mean Squared Error measures average squared prediction error.
+
+MSE = (1/n) * sum((yi - y_predicted)^2)
+
+It penalizes large errors more heavily.
+
+
+12.3 RMSE
+Root Mean Squared Error is the square root of MSE.
+
+RMSE = sqrt(MSE)
+
+RMSE is in the same unit as the target variable.
+
+
+12.4 R-Squared
+R-squared measures how much variation in the target is explained by the model.
+
+R^2 = 1 - SS_res / SS_tot
+
+Generally:
+Higher R^2 -> better fit
+
+
+13. CLASSIFICATION EVALUATION
+-----------------------------
+
+13.1 Confusion Matrix
+
+                    Predicted Positive    Predicted Negative
+Actual Positive          TP                     FN
+Actual Negative          FP                     TN
+
+TP = True Positive
+TN = True Negative
+FP = False Positive
+FN = False Negative
+
+
+13.2 Accuracy
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+
+Measures the percentage of correct predictions.
+
+Accuracy can be misleading when the dataset is highly imbalanced.
+
+
+13.3 Precision
+Precision = TP / (TP + FP)
+
+Answers:
+"Of all predicted positives, how many were actually positive?"
+
+Important when false positives are costly.
+
+
+13.4 Recall
+Recall = TP / (TP + FN)
+
+Answers:
+"Of all actual positives, how many did the model identify?"
+
+Important when false negatives are costly.
+
+
+13.5 F1 Score
+F1 = 2 * (Precision * Recall) / (Precision + Recall)
+
+Provides a balance between Precision and Recall.
+
+
+13.6 ROC-AUC
+ROC curve plots:
+True Positive Rate vs False Positive Rate
+
+AUC means Area Under the Curve.
+
+Higher AUC generally means better ability to distinguish classes.
+
+
+14. OVERFITTING
+---------------
+Overfitting happens when a model learns the training data too closely, including noise.
+
+Example:
+Training Accuracy = 99%
+Testing Accuracy  = 70%
+
+Solutions:
+- More training data
+- Regularization
+- Cross-validation
+- Feature selection
+- Reduce model complexity
+- Pruning
+- Dropout for neural networks
+
+
+15. UNDERFITTING
+----------------
+Underfitting occurs when the model is too simple to capture the underlying patterns.
+
+Example:
+Training Accuracy = 65%
+Testing Accuracy  = 63%
+
+Solutions:
+- Increase model complexity
+- Add useful features
+- Reduce excessive regularization
+- Train longer where appropriate
+
+
+16. BIAS-VARIANCE TRADEOFF
+--------------------------
+High Bias -> usually associated with underfitting.
+High Variance -> usually associated with overfitting.
+
+The goal is to find a balance between bias and variance.
+
+
+17. CROSS-VALIDATION
+--------------------
+Cross-validation evaluates a model using multiple train-validation splits.
+
+K-Fold Cross-Validation:
+If K = 5, each fold gets a chance to be the validation set.
+
+The final score is usually the average of the fold scores.
+
+
+18. HYPERPARAMETERS
+-------------------
+Hyperparameters are settings chosen before model training.
+
+Random Forest:
+- n_estimators
+- max_depth
+- min_samples_split
+
+KNN:
+- n_neighbors
+
+Decision Tree:
+- max_depth
+- criterion
+
+
+19. HYPERPARAMETER TUNING
+-------------------------
+GridSearchCV:
+Tests specified combinations systematically.
+
+RandomizedSearchCV:
+Randomly samples combinations from specified distributions.
+
+
+20. ENSEMBLE LEARNING
+---------------------
+Ensemble learning combines multiple models to improve performance.
+
+Bagging:
+Models are trained independently and combined.
+Example: Random Forest
+
+Boosting:
+Models are trained sequentially, with later models focusing on previous errors.
+Examples: AdaBoost, Gradient Boosting, XGBoost
+
+
+21. GRADIENT BOOSTING
+---------------------
+Gradient Boosting builds models sequentially.
+
+Each new model attempts to improve the errors made by previous models.
+
+Popular implementations:
+- Gradient Boosting
+- XGBoost
+- LightGBM
+- CatBoost
+
+
+22. FEATURE ENGINEERING
+-----------------------
+Feature engineering means creating or transforming variables to improve model performance.
+
+Example:
+Date = 17-08-2026
+
+Can create:
+Year = 2026
+Month = 8
+Day = 17
+Day of week = Monday
+
+Other examples:
+- Income / Loan Amount
+- Price / Earnings
+- Revenue Growth
+- Age
+- Debt-to-Income Ratio
+
+Good features can significantly improve model performance.
+
+
+23. FEATURE SELECTION
+---------------------
+Feature selection identifies the most useful features.
+
+Methods:
+- Correlation analysis
+- SelectKBest
+- Recursive Feature Elimination
+- Lasso
+- Tree-based feature importance
+
+Benefits:
+- Reduces complexity
+- Reduces overfitting
+- Improves interpretability
+- Can improve training speed
+
+
+24. TIME SERIES MACHINE LEARNING
+--------------------------------
+Time series data is collected over time.
+
+Examples:
+- Stock prices
+- Sales
+- Revenue
+- Temperature
+- GDP
+- Exchange rates
+
+Important characteristics:
+- Trend
+- Seasonality
+- Cyclicality
+- Noise
+
+
+25. STATIONARITY
+----------------
+A stationary time series has statistical properties that remain relatively stable over time.
+
+Important properties:
+- Constant mean
+- Constant variance
+- Stable autocorrelation structure
+
+One common test is the Augmented Dickey-Fuller (ADF) test.
+
+Common interpretation:
+p-value < 0.05
+-> Reject null hypothesis
+-> Evidence of stationarity
+
+
+26. AUTOCORRELATION
+-------------------
+Autocorrelation measures the relationship between a time series and its previous values.
+
+ACF = Autocorrelation Function
+Shows correlation at different lags.
+
+PACF = Partial Autocorrelation Function
+Shows correlation at a particular lag after accounting for intermediate lags.
+
+ACF and PACF are useful for ARIMA-family model identification.
+
+
+27. AR — AUTOREGRESSIVE MODEL
+-----------------------------
+AR uses previous observations to predict the current value.
+
+AR(p):
+Yt = c + phi1*Yt-1 + phi2*Yt-2 + ... + phip*Yt-p + error
+
+p = AR order
+
+
+28. MA — MOVING AVERAGE MODEL
+-----------------------------
+MA uses previous forecast errors to model the current value.
+
+MA(q):
+Yt = c + error_t + theta1*error_t-1 + ... + thetaq*error_t-q
+
+q = MA order
+
+Important:
+MA in time series is different from a simple moving average indicator.
+
+
+29. ARIMA
+---------
+ARIMA stands for:
+AutoRegressive Integrated Moving Average
+
+Parameters:
+ARIMA(p,d,q)
+
+p = AR order
+d = degree of differencing
+q = MA order
+
+Example:
+ARIMA(1,1,1)
+
+It combines:
+AR + Differencing + MA
+
+
+30. SARIMA
+----------
+SARIMA extends ARIMA to handle seasonality.
+
+Representation:
+SARIMA(p,d,q)(P,D,Q,s)
+
+p = non-seasonal AR
+d = non-seasonal differencing
+q = non-seasonal MA
+P = seasonal AR
+D = seasonal differencing
+Q = seasonal MA
+s = seasonal period
+
+Example:
+SARIMA(1,1,1)(1,1,1,12)
+
+Useful for monthly data with yearly seasonality.
+
+
+31. SARIMAX
+-----------
+SARIMAX extends SARIMA by adding exogenous variables (external predictors).
+
+Example:
+Stock Price
+    |
+    +-- SARIMA
+    |
+    +-- Interest Rate
+    +-- Exchange Rate
+    +-- Market Index
+
+The X represents external/exogenous variables.
+
+Useful when external factors influence the target time series.
+
+
+32. STATSMODELS
+---------------
+Statsmodels is a Python library focused on statistical modelling, statistical tests and time-series analysis.
+
+Useful for:
+- OLS Regression
+- Statistical tests
+- AR
+- MA
+- ARIMA
+- SARIMA
+- SARIMAX
+- ACF
+- PACF
+- Time-series analysis
+
+Python:
+import statsmodels.api as sm
+
+
+33. SCIKIT-LEARN
+----------------
+Scikit-learn is one of the main Python libraries for Machine Learning.
+
+It provides:
+- Regression
+- Classification
+- Clustering
+- Preprocessing
+- Model selection
+- Cross-validation
+- Metrics
+- Hyperparameter tuning
+
+Python:
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+
+34. IMPORTANT PYTHON LIBRARIES
+------------------------------
+NumPy
+-> Numerical computing
+
+Pandas
+-> Data manipulation
+
+Matplotlib / Seaborn
+-> Data visualization
+
+Scikit-learn
+-> Machine Learning
+
+Statsmodels
+-> Statistical and time-series models
+
+
+35. IMPORTANT ML CONCEPTS
+-------------------------
+
+Independent Variable:
+Input feature used to make predictions.
+Usually represented by X.
+
+Dependent Variable:
+Target/output being predicted.
+Usually represented by y.
+
+Example:
+X = Area, Bedrooms, Location
+y = House Price
+
+
+36. PARAMETRIC VS NON-PARAMETRIC MODELS
+---------------------------------------
+Parametric:
+Assumes a specific functional form.
+Examples:
+- Linear Regression
+- Logistic Regression
+
+Non-Parametric:
+Makes fewer assumptions about the underlying distribution.
+Examples:
+- KNN
+- Decision Trees
+- Random Forest
+
+
+37. MODEL TRAINING
+------------------
+Training means allowing the algorithm to learn relationships between input variables and the target.
+
+Python:
+model.fit(X_train, y_train)
+
+
+38. PREDICTION
+-------------
+After training:
+
+Python:
+y_pred = model.predict(X_test)
+
+The model generates predictions for unseen data.
+
+
+39. MODEL EVALUATION
+--------------------
+Compare:
+
+Actual Values
+      vs
+Predicted Values
+
+Then calculate appropriate evaluation metrics.
+
+Regression:
+- MAE
+- MSE
+- RMSE
+- R^2
+
+Classification:
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- ROC-AUC
+
+
+40. COMPLETE ML PROJECT EXAMPLE — LOAN APPROVAL
+------------------------------------------------
+Loan Dataset
+     |
+Data Cleaning
+     |
+Handle Missing Values
+     |
+Encode Categorical Variables
+     |
+Feature Scaling
+     |
+Train-Test Split
+     |
+Logistic Regression
+     |
+Prediction
+     |
+Confusion Matrix
+     |
+Accuracy / Precision / Recall / F1
+     |
+Hyperparameter Tuning
+     |
+Final Model
+
+
+41. MACHINE LEARNING CHEAT SHEET
+--------------------------------
+
+Problem                         Algorithm
+--------------------------------------------------------
+Continuous prediction           Linear Regression
+Nonlinear regression            Polynomial Regression
+Binary classification           Logistic Regression
+Classification                  KNN
+Classification / Regression     Decision Tree
+Classification / Regression     Random Forest
+Classification                  SVM
+Text classification             Naive Bayes
+Customer segmentation           K-Means
+Density clustering              DBSCAN
+Dimensionality reduction        PCA
+Time-series forecasting         ARIMA
+Seasonal forecasting            SARIMA
+Seasonal + external variables   SARIMAX
+
+
+42. KEY DIFFERENCES — AR, MA, ARIMA, SARIMA, SARIMAX
+-----------------------------------------------------
+
+AR:
+Uses past values.
+
+MA:
+Uses past forecast errors.
+
+ARIMA:
+AR + Differencing + MA.
+
+SARIMA:
+ARIMA + Seasonality.
+
+SARIMAX:
+SARIMA + External Variables.
+
+Easy way to remember:
+AR     -> Past values
+MA     -> Past errors
+ARIMA  -> AR + Differencing + MA
+SARIMA -> ARIMA + Seasonality
+SARIMAX -> SARIMA + External Variables
+
+
+43. IMPORTANT ML INTERVIEW QUESTIONS
+------------------------------------
+You should be able to explain:
+
+1. What is Machine Learning?
+2. Difference between AI, ML and Deep Learning?
+3. Types of Machine Learning?
+4. Supervised vs Unsupervised Learning?
+5. Regression vs Classification?
+6. Linear vs Logistic Regression?
+7. What is overfitting?
+8. What is underfitting?
+9. Bias vs Variance?
+10. What is cross-validation?
+11. What is feature engineering?
+12. Why is feature scaling required?
+13. What is regularization?
+14. L1 vs L2 regularization?
+15. Random Forest vs Decision Tree?
+16. What is K-Means?
+17. How do you select K?
+18. What is PCA?
+19. Accuracy vs Precision vs Recall?
+20. What is a confusion matrix?
+21. What are MAE, MSE, RMSE and R^2?
+22. What is ARIMA?
+23. AR vs MA?
+24. ARIMA vs SARIMA?
+25. SARIMA vs SARIMAX?
+26. What are ACF and PACF?
+27. What is stationarity?
+28. What is the ADF test?
+29. Why use Statsmodels?
+30. Why use Scikit-learn?
+
+
+END OF MACHINE LEARNING MASTER NOTES
+====================================
